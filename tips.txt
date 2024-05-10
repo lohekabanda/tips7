@@ -1,0 +1,171 @@
+import pandas as pd
+df = pd.read_csv('tips.csv')
+df
+total_bill	tip	sex	smoker	day	time	size
+0	16.99	1.01	Female	No	Sun	Dinner	2
+1	10.34	1.66	Male	No	Sun	Dinner	3
+2	21.01	3.50	Male	No	Sun	Dinner	3
+3	23.68	3.31	Male	No	Sun	Dinner	2
+4	24.59	3.61	Female	No	Sun	Dinner	4
+5	25.29	4.71	Male	No	Sun	Dinner	4
+6	8.77	2.00	Male	No	Sun	Dinner	2
+7	26.88	3.12	Male	No	Sun	Dinner	4
+8	15.04	1.96	Male	No	Sun	Dinner	2
+9	14.78	3.23	Male	No	Sun	Dinner	2
+10	10.27	1.71	Male	No	Sun	Dinner	2
+11	35.26	5.00	Female	No	Sun	Dinner	4
+12	15.42	1.57	Male	No	Sun	Dinner	2
+13	18.43	3.00	Male	No	Sun	Dinner	4
+14	14.83	3.02	Female	No	Sun	Dinner	2
+15	21.58	3.92	Male	No	Sun	Dinner	2
+16	10.33	1.67	Female	No	Sun	Dinner	3
+17	16.29	3.71	Male	No	Sun	Dinner	3
+18	16.97	3.50	Female	No	Sun	Dinner	3
+19	20.65	3.35	Male	No	Sat	Dinner	3
+20	17.92	4.08	Male	No	Sat	Dinner	2
+21	20.29	2.75	Female	No	Sat	Dinner	2
+22	15.77	2.23	Female	No	Sat	Dinner	2
+23	39.42	7.58	Male	No	Sat	Dinner	4
+24	19.82	3.18	Male	No	Sat	Dinner	2
+25	17.81	2.34	Male	No	Sat	Dinner	4
+26	13.37	2.00	Male	No	Sat	Dinner	2
+27	12.69	2.00	Male	No	Sat	Dinner	2
+28	21.70	4.30	Male	No	Sat	Dinner	2
+29	19.65	3.00	Female	No	Sat	Dinner	2
+...	...	...	...	...	...	...	...
+214	28.17	6.50	Female	Yes	Sat	Dinner	3
+215	12.90	1.10	Female	Yes	Sat	Dinner	2
+216	28.15	3.00	Male	Yes	Sat	Dinner	5
+217	11.59	1.50	Male	Yes	Sat	Dinner	2
+218	7.74	1.44	Male	Yes	Sat	Dinner	2
+219	30.14	3.09	Female	Yes	Sat	Dinner	4
+220	12.16	2.20	Male	Yes	Fri	Lunch	2
+221	13.42	3.48	Female	Yes	Fri	Lunch	2
+222	8.58	1.92	Male	Yes	Fri	Lunch	1
+223	15.98	3.00	Female	No	Fri	Lunch	3
+224	13.42	1.58	Male	Yes	Fri	Lunch	2
+225	16.27	2.50	Female	Yes	Fri	Lunch	2
+226	10.09	2.00	Female	Yes	Fri	Lunch	2
+227	20.45	3.00	Male	No	Sat	Dinner	4
+228	13.28	2.72	Male	No	Sat	Dinner	2
+229	22.12	2.88	Female	Yes	Sat	Dinner	2
+230	24.01	2.00	Male	Yes	Sat	Dinner	4
+231	15.69	3.00	Male	Yes	Sat	Dinner	3
+232	11.61	3.39	Male	No	Sat	Dinner	2
+233	10.77	1.47	Male	No	Sat	Dinner	2
+234	15.53	3.00	Male	Yes	Sat	Dinner	2
+235	10.07	1.25	Male	No	Sat	Dinner	2
+236	12.60	1.00	Male	Yes	Sat	Dinner	2
+237	32.83	1.17	Male	Yes	Sat	Dinner	2
+238	35.83	4.67	Female	No	Sat	Dinner	3
+239	29.03	5.92	Male	No	Sat	Dinner	3
+240	27.18	2.00	Female	Yes	Sat	Dinner	2
+241	22.67	2.00	Male	Yes	Sat	Dinner	2
+242	17.82	1.75	Male	No	Sat	Dinner	2
+243	18.78	3.00	Female	No	Thur	Dinner	2
+244 rows × 7 columns
+
+df.info()
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 244 entries, 0 to 243
+Data columns (total 7 columns):
+total_bill    244 non-null float64
+tip           244 non-null float64
+sex           244 non-null object
+smoker        244 non-null object
+day           244 non-null object
+time          244 non-null object
+size          244 non-null int64
+dtypes: float64(2), int64(1), object(4)
+memory usage: 9.6+ KB
+df=df.rename(columns={'size':'people'})
+df.isna().sum()
+total_bill    0
+tip           0
+sex           0
+smoker        0
+day           0
+time          0
+people        0
+dtype: int64
+col_var =df[['people','sex', 'smoker', 'day', 'time']]
+for i in col_var:
+    print(i,df[i].unique())
+people [2 3 4 1 6 5]
+sex ['Female' 'Male']
+smoker ['No' 'Yes']
+day ['Sun' 'Sat' 'Thur' 'Fri']
+time ['Dinner' 'Lunch']
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.heatmap(df.corr(),annot=True,cmap='coolwarm')
+<matplotlib.axes._subplots.AxesSubplot at 0xaf995f0>
+
+sns.pairplot(df)
+<seaborn.axisgrid.PairGrid at 0xb035f30>
+
+sns.lineplot(data=df,x='total_bill',y='tip')
+C:\Users\shiva\ANACONDA\lib\site-packages\scipy\stats\stats.py:1713: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
+  return np.add.reduce(sorted[indexer] * weights, axis=axis) / sumval
+<matplotlib.axes._subplots.AxesSubplot at 0xbb5ac90>
+
+sns.lineplot(data=df,x='people',y='tip')
+C:\Users\shiva\ANACONDA\lib\site-packages\scipy\stats\stats.py:1713: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
+  return np.add.reduce(sorted[indexer] * weights, axis=axis) / sumval
+<matplotlib.axes._subplots.AxesSubplot at 0xbba3150>
+
+sns.lineplot(data=df,x='people',y='tip',hue='time')
+C:\Users\shiva\ANACONDA\lib\site-packages\scipy\stats\stats.py:1713: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
+  return np.add.reduce(sorted[indexer] * weights, axis=axis) / sumval
+<matplotlib.axes._subplots.AxesSubplot at 0xbbdc3d0>
+
+sns.boxplot(data=df,x='day',y='total_bill')
+<matplotlib.axes._subplots.AxesSubplot at 0xbc18b70>
+
+sns.boxplot(data=df,x='people',y='total_bill',hue='day')
+<matplotlib.axes._subplots.AxesSubplot at 0xcc34a70>
+
+sns.boxplot(data=df,x='day',y='total_bill',hue='sex')
+<matplotlib.axes._subplots.AxesSubplot at 0xcd64870>
+
+sns.histplot(df,x='total_bill',hue='time')
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-82-215162f3b056> in <module>()
+----> 1 sns.histplot(df,x='total_bill',hue='time')
+
+AttributeError: module 'seaborn' has no attribute 'histplot'
+sns.scatterplot(data=df,x='total_bill',y='tip',hue='time')
+<matplotlib.axes._subplots.AxesSubplot at 0xce2c790>
+
+sns.scatterplot(data=df,x='total_bill',y='tip',hue='smoker')
+<matplotlib.axes._subplots.AxesSubplot at 0xce97ab0>
+
+sns.violinplot(data=df,x='day',y='tip')
+C:\Users\shiva\ANACONDA\lib\site-packages\scipy\stats\stats.py:1713: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
+  return np.add.reduce(sorted[indexer] * weights, axis=axis) / sumval
+<matplotlib.axes._subplots.AxesSubplot at 0xced2a70>
+
+sns.violinplot(data=df,x ='time', y ='tip',hue='day')
+C:\Users\shiva\ANACONDA\lib\site-packages\scipy\stats\stats.py:1713: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
+  return np.add.reduce(sorted[indexer] * weights, axis=axis) / sumval
+<matplotlib.axes._subplots.AxesSubplot at 0xcec9f30>
+
+sns.violinplot(data=df,x ='people', y ='total_bill')
+C:\Users\shiva\ANACONDA\lib\site-packages\scipy\stats\stats.py:1713: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
+  return np.add.reduce(sorted[indexer] * weights, axis=axis) / sumval
+<matplotlib.axes._subplots.AxesSubplot at 0xcf82870>
+
+sns.barplot(data=df,x ='people', y ='total_bill')
+C:\Users\shiva\ANACONDA\lib\site-packages\scipy\stats\stats.py:1713: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
+  return np.add.reduce(sorted[indexer] * weights, axis=axis) / sumval
+<matplotlib.axes._subplots.AxesSubplot at 0xd06a530>
+
+sns.timeplot(data=df,x ='people', y ='total_bill')
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-97-a6d0f7569843> in <module>()
+----> 1 sns.timeplot(data=df,x ='people', y ='total_bill')
+
+AttributeError: module 'seaborn' has no attribute 'timeplot'
+ 
